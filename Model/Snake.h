@@ -13,16 +13,20 @@ namespace GameModel
 
     class Snake {
     private:
-        size_t id;
         pair<int, int> movement_vector;
         vector< pair<int, int> > body;
+        pair<int, int> tail;
+        pair<int, int> head;
     public:
         Snake();
-        Snake(size_t size, pair<int, int> head);
+        Snake(size_t size, pair<int, int> place);
         void move();
         void change_direction(pair<int, int> new_direction);
         size_t get_size();
-        size_t get_id();
+        pair<int, int> get_tail();
+        void set_tail();
+        pair<int, int> get_head();
+        pair<int, int> part_of_body(size_t i);
     };
 }
 #endif // SNAKE_H

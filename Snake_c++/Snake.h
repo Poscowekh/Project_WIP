@@ -16,7 +16,7 @@ class Snake {
 	public:
 		Snake();
 		Snake(int, int, int);
-		void move(string);
-	    int get_size();
+		void move(string) const;
+	    int get_size() const;
 };
 #endif // SNAKE_H
