@@ -1,40 +1,42 @@
-// Main_Model.cpp for Model
+// main.cpp
 
 #include "Matrix.h"
 #include "Snake.h"
+#include "Food.h"
+#include "Block.h"
 
 using namespace std;
 
-int main()
-{
-    //srand(time(NULL));
-    srand(1);
-    int x = 7;
-    int y = 5;
+int main() {
+    int m = 5;
+    int n = 9;
     //cin >> x >> y;
-    GameModel::Matrix field = GameModel::Matrix(x, y); //Matrix x by y
-    field.add_snake(3, make_pair(2,2));  //Snake of size 3 at x(2-2),y(2-4)
-    field.spawn_food(1);
-    field.spawn_blocks(2);
+    GameModel::Matrix field = GameModel::Matrix(m, n); //Matrix m rows by n columns
+    field.spawn_food("apple", make_pair(1,2), 0);
+    field.spawn_block("wall", make_pair(1,6), 1);
+    field.update_matrix();
     field.print();
-    field.move_snakes();
-    field.set_values();
+    field.add_snake(2, make_pair(1,4), 0);             //Snake of size 2 at row 1 and column 4
+    field.change_movement(0, make_pair(0,-1));         //Moves left
+    for(size_t i = 0; i < 2; i++)
+    {
+        field.update_matrix();
+        field.print();
+    }
+    field.change_movement(0, make_pair(1,0));         //Moves down
+    field.update_matrix();
     field.print();
-    //system("pause");
+    field.change_movement(0, make_pair(0,1));         //Moves right
+    for(size_t i = 0; i < 4; i++)
+    {
+        field.update_matrix();
+        field.print();
+    }
+    field.change_movement(0, make_pair(-1,0));         //Moves up
+    for(size_t i = 0; i < 2; i++)
+    {
+        field.update_matrix();
+        field.print();
+    }
     return 0;
 }
-/* To do list:
-{
-What works:
-    1) Creating field
-    2) Random spawning of food and blocks
-    3) Field values and print
-    4)
-    5)
-What does not:
-    1) Creating and adding snake through matrix
-    2) Reseting field to zero
-    3)
-    4)
-    5)
-{*/
