@@ -15,9 +15,24 @@ namespace GameModel
 
     void Graph::create_map()
     {
-        for(size_t i = 0; i < height; i++)
-            for(size_t j = 0; j < width; j++)
-                nodes[width*j + height] = Node(make_pair(i,j), 0, width*j + height);
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+            {
+                int tmp_key = width*j + i;
+                Node tmp_node = Node(make_pair(i,j), 0, tmp_key);
+                nodes.emplace(tmp_key, tmp_node);
+            }
+    }
+
+    void Graph::print_graph()
+    {
+        for(int i = 0; i < height; i++)
+            for(int j = 0; j < width; j++)
+            {
+                size_t tmp_key = width*j + i;
+                pair<int, int> tmp_pair = nodes[tmp_key].get_coordinates();
+                cout << tmp_key /*<< ' ' << '(' << tmp_pair.first << ',' << tmp_pair.second <<')' */<< ' ';
+            }
     }
 
     size_t Graph::get_height()

@@ -3,6 +3,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <stdlib.h>
+#include <iostream>
 #include <map>
 #include "Node.h"
 using namespace std;
@@ -11,10 +12,10 @@ namespace GameModel
     class Graph
     {
         private:
-            size_t height;
-            size_t width;
+            int height;
+            int width;
             map<int, Node> nodes;
-            map<int, Node>::iterator nodes_iterator;
+            //map<int, Node>::iterator nodes_iterator;
             pair<int, int> food;
             pair<int, int> snakes_head;
         public:
@@ -24,6 +25,7 @@ namespace GameModel
             size_t get_count();
             size_t Dijkstra();
             void create_map();
+            void print_graph();
     };
 }
 #endif // GRAPH_H
