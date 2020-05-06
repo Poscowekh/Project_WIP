@@ -10,4 +10,5 @@ add_executable(Main
 	Matrix.cpp
 	Block.cpp
 	Food.cpp
+	Tests.cpp
 )
