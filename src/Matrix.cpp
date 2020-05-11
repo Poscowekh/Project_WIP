@@ -1,4 +1,4 @@
-// Matrix.cpp for Matrix
+// Matrix.cpp for Model
 
 #include "Matrix.h"
 
@@ -131,22 +131,22 @@ namespace GameModel
     { //Spawns block in a random free cell
         for(size_t i = 0; i < columns; i++)
         {
-            Block tmp = Block(0, make_pair(0,i), "border");
+            Block tmp = Block(0, make_pair(0,i), "mountains");
             blocks.push_back(tmp);
         }
         for(size_t i = 0; i < columns; i++)
         {
-            Block tmp = Block(0, make_pair(rows - 1,i), "border");
+            Block tmp = Block(0, make_pair(rows - 1,i), "mountains");
             blocks.push_back(tmp);
         }
         for(size_t i = 1; i < rows - 1; i++)
         {
-            Block tmp = Block(0, make_pair(i,0), "border");
+            Block tmp = Block(0, make_pair(i,0), "mountains");
             blocks.push_back(tmp);
         }
         for(size_t i = 1; i < rows - 1; i++)
         {
-            Block tmp = Block(0, make_pair(i,columns - 1), "border");
+            Block tmp = Block(0, make_pair(i,columns - 1), "mountains");
             blocks.push_back(tmp);
         }
     }
@@ -245,9 +245,7 @@ namespace GameModel
 
     void Matrix::remove_snake(size_t index)
     {
-        Snake tmp = snakes[snakes.size() - 1];
-        snakes[snakes.size() - 1] = snakes[index];
-        snakes[index] = tmp;
+        snakes[index] = snakes[snakes.size() - 1];
         snakes.pop_back();
     }
 
@@ -277,5 +275,40 @@ namespace GameModel
         for(size_t i = 0; i < blocks.size(); i++)
             if(blocks[i].get_coordinates() == coordinates)
                 return blocks[i].get_id();
+    }
+
+    vector<Block> Matrix::get_blocks()
+    {
+        return blocks;
+    }
+
+    vector<Food> Matrix::get_food()
+    {
+        return food;
+    }
+
+    vector<Snake> Matrix::get_snakes()
+    {
+        return snakes;
+    }
+
+    size_t Matrix::get_value(pair<int, int> coordinates)
+    {
+        return matrix[coordinates.first][coordinates.second];
+    }
+
+    pair<int, int> Matrix::get_snake_head(size_t id)
+    {
+        return snakes[return_snakes_index_by_id(id)].get_head();
+    }
+
+    size_t Matrix::get_food_count()
+    {
+        return food.size();
+    }
+
+    size_t Matrix::get_blocks_count()
+    {
+        return blocks.size();
     }
 }
