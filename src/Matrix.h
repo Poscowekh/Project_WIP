@@ -9,15 +9,13 @@
 #include "Snake.h"
 #include "Food.h"
 #include "Block.h"
-#include "oxygine-framework.h"
 //#include <random>
 //#include <time.h>
 
 using namespace std;
 namespace GameModel
 {
-    DECLARE_SMART(Matrix, spMatrix)
-    class Matrix : public oxygine::EventDispatcher
+    class Matrix
     {
         private:
             size_t rows;
