@@ -5,12 +5,12 @@ project(Graph)
 include_directories(headers)
 
 add_executable(Main
-	Main.cpp
-	Snake.cpp
-	Matrix.cpp
-	Block.cpp
-	Food.cpp
-	Graph.cpp
-	Node.cpp
-	Tests.cpp
+        src/Main.cpp
+        src/Snake.cpp
+        src/Matrix.cpp
+        src/Block.cpp
+        src/Food.cpp
+        src/Graph.cpp
+        src/Node.cpp
+        src/Tests.cpp
 )

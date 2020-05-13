@@ -26,7 +26,7 @@ namespace GameModel
         size_t in = 1;
         size_t out = 0;
         if(matrix_value == 8 || matrix_value == 1 || matrix_value == 3)
-            in = 10 * shift;
+            in = 5 * shift;
         return make_pair(in, out);
                        //Maybe add terrain types here later
     }
@@ -39,7 +39,7 @@ namespace GameModel
                 int tmp_key = shift * j + i;
                 pair<size_t, size_t> values = get_initial_values(make_pair(i,j));
                 Node tmp_node(make_pair(i,j), values.first, values.second, tmp_key);
-                //tmp_node.set_value();
+                tmp_node.set_distance(5 * shift);
                 nodes.insert(make_pair(tmp_key, tmp_node));
                 set_neighbours(tmp_node.get_coordinates(), tmp_key);
             }
@@ -88,7 +88,7 @@ namespace GameModel
 
     void Graph::count_from_node(Node* init_node, Node* prev_node)
     {
-        if(!init_node->get_visit_flag() && init_node->get_distance() < 10 * shift)
+        if(!init_node->get_visit_flag() && init_node->get_distance() < 5 * shift)
         {
             //vector<int> neighbours_keys = init_node.get_neighbours_keys();
             //if(/*init_node.get_way_to().back() != init_node.get_key() || */init_node.get_key() != prev_node.get_key())   //?????
@@ -97,43 +97,40 @@ namespace GameModel
             vector< pair<int, int> > distance_vector;
             for(size_t i = 0; i < init_node->get_neighbours_count(); i++)
             {
-                Node* tmp = &nodes[init_node->get_neighbours_keys()[i]];
-                cout << tmp->get_key() << "  ";
-                if(tmp->get_key() != prev_node->get_key())
-                    if(!tmp->get_visit_flag())
-                    {
-                        int distance = init_node->get_distance() + tmp->get_values().first;
-                        if(tmp->get_distance() > distance || tmp->get_distance() == 0)
-                            tmp->set_distance(distance);
-                        cout << i << ':' << tmp->get_distance() << ' ';
-                        distance_vector.push_back(make_pair(tmp->get_key(), tmp->get_distance()));
-                    }
+                Node* tmp_node = &nodes[init_node->get_neighbours_keys()[i]];
+                if(tmp_node->get_key() != prev_node->get_key())
+                {
+                    int distance = init_node->get_distance() + tmp_node->get_values().first;
+                    if(tmp_node->get_distance() > distance || tmp_node->get_distance() == 0)
+                        tmp_node->set_distance(distance);
+                    distance_vector.push_back(make_pair(tmp_node->get_key(), tmp_node->get_distance()));
+                }
             }
-            cout << endl;
-            sort_distance_vector(&distance_vector);
+            distance_vector = sort_distance_vector(distance_vector);
             for(size_t i = 0; i < distance_vector.size(); i++)
             {
                 int tmp_key = distance_vector[i].first;
-                Node* next_node = &(init_node->get_neighbours_keys()[tmp_key]);
-                count_from_node(next_node, init_node);
+                count_from_node(&nodes[tmp_key], init_node);
             }
         }
     }
 
-    void Graph::sort_distance_vector(vector< pair<int, int> >* vect)
+    vector< pair<int, int> > Graph::sort_distance_vector(vector< pair<int, int> > vect)
     {
-        for(size_t i = 0; i < vect->size(); i++)
-            for(size_t j = i; j < vect->size(); j++)
+        for(size_t i = 0; i < vect.size(); i++)
+            for(size_t j = i; j < vect.size(); j++)
                 if(vect[i].second > vect[j].second)
                 {
                     pair<int, int> tmp = vect[i];
                     vect[i] = vect[j];
                     vect[j] = vect[i];
                 }
+        return vect;
     }
 
     void Graph::print_distance()
     {
+        cout << endl;
         for(size_t i = 0; i < height; i++)
         {
             for(size_t j = 0; j < width; j++)
@@ -146,6 +143,7 @@ namespace GameModel
     void Graph::Dijkstra()
     {
         int init_key = snakes_head.first + snakes_head.second * shift;
+        nodes[init_key].set_distance(0);
         count_from_node(&nodes[init_key], &nodes[init_key]);
         //for(size_t i = 0; i < food.size(); i++)
         //{//pair index,distance

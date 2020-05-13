@@ -1,42 +1,36 @@
 // main.cpp
 
+#include "Tests.h"
 #include "Matrix.h"
-#include "Snake.h"
-#include "Food.h"
-#include "Block.h"
+#include "Graph.h"
 
 using namespace std;
-
 int main() {
-    int m = 5;
-    int n = 9;
-    //cin >> x >> y;
-    GameModel::Matrix field = GameModel::Matrix(m, n); //Matrix m rows by n columns
-    field.spawn_food("apple", make_pair(1,2), 0);
-    field.spawn_block("wall", make_pair(1,6), 1);
-    field.update_matrix();
-    field.print();
-    field.add_snake(2, make_pair(1,4), 0);             //Snake of size 2 at row 1 and column 4
-    field.change_movement(0, make_pair(0,-1));         //Moves left
-    for(size_t i = 0; i < 2; i++)
-    {
-        field.update_matrix();
-        field.print();
-    }
-    field.change_movement(0, make_pair(1,0));         //Moves down
-    field.update_matrix();
-    field.print();
-    field.change_movement(0, make_pair(0,1));         //Moves right
-    for(size_t i = 0; i < 4; i++)
-    {
-        field.update_matrix();
-        field.print();
-    }
-    field.change_movement(0, make_pair(-1,0));         //Moves up
-    for(size_t i = 0; i < 2; i++)
-    {
-        field.update_matrix();
-        field.print();
-    }
+    //GameModel::test_circle();             //Test circle movement
+    //GameModel::test_food();               //Test eating food
+    //GameModel::test_block();              //Test reaching block
+    //GameModel::test_food_block();         //Test eating food and reaching block
+
+    //GameModel::test_border();             //Test destroying at border
+    //GameModel::test_border_food();        //Test eating food at border
+    //GameModel::test_border_block();       //Test destroying by block at border
+    //GameModel::test_border_food_block();  //Test eating and destroying at border
+
+    GameModel::Matrix* matrix = new GameModel::Matrix(7,7);
+    matrix->spawn_borderline();
+    matrix->spawn_food("apple", make_pair(1,1), 1);
+    matrix->spawn_block("wall", make_pair(2,3), 2);
+    matrix->spawn_block("wall", make_pair(2,2), 3);
+    matrix->spawn_block("wall", make_pair(3,2), 4);
+    matrix->add_snake(2, make_pair(5,5), 100);
+    matrix->update_matrix();
+    matrix->print();
+    cout << endl;
+
+    GameModel::Graph* graph = new GameModel::Graph(make_pair(5,5), matrix);
+    //graph->print_graph();
+    graph->Dijkstra();
+    graph->print_distance();
+
     return 0;
 }

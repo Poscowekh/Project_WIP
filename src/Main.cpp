@@ -27,7 +27,7 @@ int main() {
     matrix->print();
     cout << endl;
 
-    GameModel::Graph* graph = new GameModel::Graph(make_pair(3,3), matrix);
+    GameModel::Graph* graph = new GameModel::Graph(make_pair(5,5), matrix);
     //graph->print_graph();
     graph->Dijkstra();
     graph->print_distance();

@@ -25,7 +25,7 @@ namespace GameModel
             pair<int, int> snakes_head;
         public:
             Graph(pair<int, int> snakes_head_coordinates, Matrix* matrix);
-            void sort_distance_vector(vector< pair<int, int> >* vect);
+            vector< pair<int, int> > sort_distance_vector(vector< pair<int, int> > vect);
             size_t get_height();
             size_t get_width();
             size_t get_count();
