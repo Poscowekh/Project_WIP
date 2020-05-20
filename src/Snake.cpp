@@ -7,7 +7,7 @@ using namespace std;
 namespace GameModel
 {
     Snake::Snake(size_t new_id)
-    {//Creates Snake at (0,0)
+    {//Creates Snake at (0,0) ABSOLETE
         body.push_back(make_pair(0,0));
         tail = body[0];
         size = 1;
@@ -25,16 +25,17 @@ namespace GameModel
         movement_vector = (make_pair(0,-1)); //By default moves left
         id = new_id;
         set_tail();
+        death_flag = false;
     }
 
     size_t Snake::get_size()
     {
-        return this->size;
+        return size;
     }
 
     size_t Snake::get_id()
     {
-        return this->id;
+        return id;
     }
 
     pair<int, int> Snake::get_prev_head()
@@ -64,13 +65,23 @@ namespace GameModel
 
     void Snake::change_direction(pair<int, int> new_direction)
     { //Changes Snake's movement direction
-        //if(get_size() > 1)  //Shouldn't move to itself!
-        /*{
-            if((get_head().first + new_direction.first != part_of_body(1).first) && (get_head().second + new_direction.second != part_of_body(1).second))
+        if(!death_flag)
+        {
+            if(get_size() > 2)  //Shouldn't move on itself!
+            {
+                if(!
+                (
+                    (get_head().first + new_direction.first == part_of_body(1).first
+                    && get_head().second + new_direction.second == part_of_body(1).second)
+                    ||
+                    (get_head().first + new_direction.first == part_of_body(2).first
+                    && get_head().second + new_direction.second == part_of_body(2).second)
+                ))
+                    movement_vector = new_direction;
+            }
+            else
                 movement_vector = new_direction;
         }
-        else*/
-            movement_vector = new_direction;
     }
 
     pair<int, int> Snake::get_movement_vector()
@@ -113,5 +124,15 @@ namespace GameModel
     void Snake::add_to_snake(pair<int, int> new_part)
     {
         body.push_back(new_part);
+    }
+
+    bool Snake::get_death_flag()
+    {
+        return death_flag;
+    }
+
+    void Snake::set_death_flag()
+    {
+        death_flag = true;
     }
 }

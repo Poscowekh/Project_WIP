@@ -42,14 +42,20 @@ namespace GameModel
     void Matrix::print()
     { //Prints matrix
         cout << "Field:" << endl;
+        cout << "/";
+        for(size_t i = 0; i < columns; i++)
+            cout << ' ' << i;
+        cout << " X" << endl;
         for (size_t i = 0; i < get_rows(); i++)
         {
+            cout << i << ' ';
             for (size_t j=0; j < get_columns(); j++)
             {
                 cout << matrix[i][j] << " ";
             }
             cout << endl;
         }
+        cout << 'Y' << endl;
     }
 
     void Matrix::reset_matrix()
@@ -204,7 +210,10 @@ namespace GameModel
             if(snake.get_head() == blocks[i].get_coordinates())
                 tmp = true;
         if(tmp)
+        {
+            snake.set_death_flag();
             return true;
+        }
         else
             return false;
     }

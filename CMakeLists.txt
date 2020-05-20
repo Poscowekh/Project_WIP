@@ -13,4 +13,17 @@ add_executable(Main
         src/Graph.cpp
         src/Node.cpp
         src/Tests.cpp
+        src/AI.cpp
+)
+
+add_executable(Main.exe
+        src/Main.cpp
+        src/Snake.cpp
+        src/Matrix.cpp
+        src/Block.cpp
+        src/Food.cpp
+        src/Graph.cpp
+        src/Node.cpp
+        src/Tests.cpp
+        src/AI.cpp
 )
